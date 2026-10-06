@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MediaForge Ultra - Real YouTube Downloader Engine</title>
+    <title>MediaForge Ultra - YouTube Downloader</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,20 +13,9 @@
                 extend: {
                     colors: {
                         brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
                             500: '#6366f1',
                             600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        },
-                        cyber: {
-                            dark: '#070a13',
-                            card: '#0f172a',
-                            border: '#1e293b',
-                            accent: '#f43f5e',
-                            neon: '#10b981',
-                            cyan: '#06b6d4'
+                            700: '#4338ca'
                         }
                     }
                 }
@@ -37,7 +26,7 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background-color: #070a13;
             color: #f8fafc;
             background-image: 
@@ -49,20 +38,6 @@
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .glow-brand:hover {
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
-        }
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #070a13;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 4px;
         }
         select option {
             background-color: #0f172a;
@@ -76,40 +51,38 @@
     <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <div class="flex items-center space-x-3">
-                <div class="p-2.5 bg-gradient-to-tr from-brand-600 via-indigo-500 to-rose-500 rounded-xl shadow-lg shadow-brand-500/20">
+                <div class="p-2.5 bg-gradient-to-tr from-brand-600 via-indigo-500 to-rose-500 rounded-xl shadow-lg">
                     <i data-lucide="download" class="w-6 h-6 text-white"></i>
                 </div>
                 <div>
-                    <div class="flex items-center space-x-2">
-                        <span class="text-xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-brand-500">MediaForge</span>
-                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 uppercase tracking-widest font-mono">LIVE API</span>
-                    </div>
+                    <span class="text-xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-brand-500">MediaForge</span>
+                    <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-400 border border-rose-500/30 uppercase tracking-widest font-mono ml-2">MULTI-NODE</span>
                 </div>
             </div>
             
             <div class="flex items-center space-x-3 text-xs text-slate-400 font-mono">
                 <span class="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span id="api-status-badge">Cobalt API v10 Active</span>
+                    <span id="api-status-badge">Auto-Failover Active</span>
                 </span>
             </div>
         </div>
     </header>
 
-    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-8">
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 flex-grow w-full space-y-8">
 
         <!-- Hero Title -->
-        <div class="text-center max-w-3xl mx-auto space-y-3">
-            <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white leading-tight">
-                High-Speed <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-indigo-400 to-rose-500">YouTube Direct Downloader</span>
+        <div class="text-center space-y-3">
+            <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white">
+                Ultra-Speed <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 via-indigo-400 to-rose-500">Media Downloader</span>
             </h1>
-            <p class="text-slate-400 text-sm sm:text-base max-w-2xl mx-auto">
-                Fetch real 4K Ultra-HD videos, 60 FPS streams, or crystal clear 320kbps MP3 audio directly using client-side REST API integrations. No ads, no malware, no fake progress bars.
+            <p class="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
+                Direct client-side media stream engine with automatic multi-node API failover.
             </p>
         </div>
 
         <!-- URL Input Card -->
-        <div class="glass-panel p-5 sm:p-7 rounded-3xl shadow-2xl max-w-4xl mx-auto space-y-4 border border-slate-800">
+        <div class="glass-panel p-5 sm:p-7 rounded-3xl shadow-2xl space-y-4 border border-slate-800">
             <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider font-semibold">
                 YouTube Video URL
             </label>
@@ -118,46 +91,28 @@
                     <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-rose-500">
                         <i data-lucide="youtube" class="w-5 h-5"></i>
                     </div>
-                    <input type="url" id="yt-url-input" placeholder="https://www.youtube.com/watch?v=..." class="w-full pl-12 pr-10 py-4 bg-slate-950/90 border border-slate-700/80 rounded-2xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-white placeholder-slate-500 font-mono text-sm outline-none transition-all">
-                    <button onclick="clearYtInput()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-500 hover:text-slate-300">
-                        <i data-lucide="x" class="w-4 h-4"></i>
+                    <input type="url" id="yt-url-input" placeholder="https://www.youtube.com/watch?v=..." class="w-full pl-12 pr-20 py-4 bg-slate-950/90 border border-slate-700/80 rounded-2xl focus:ring-2 focus:ring-brand-500 text-white placeholder-slate-500 font-mono text-sm outline-none transition-all">
+                    <button onclick="pasteClipboard()" class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-white font-mono text-xs">
+                        <i data-lucide="clipboard" class="w-4 h-4 mr-1"></i> Paste
                     </button>
                 </div>
-                <button onclick="analyzeVideo()" id="btn-analyze" class="w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-brand-600 to-rose-600 hover:from-brand-500 hover:to-rose-500 text-white font-bold rounded-2xl flex items-center justify-center space-x-2 shadow-lg glow-brand transition-all shrink-0">
+                <button onclick="analyzeVideo()" id="btn-analyze" class="w-full sm:w-auto px-7 py-4 bg-gradient-to-r from-brand-600 to-rose-600 hover:from-brand-500 hover:to-rose-500 text-white font-bold rounded-2xl flex items-center justify-center space-x-2 shadow-lg transition-all shrink-0">
                     <i data-lucide="search" id="analyze-icon" class="w-5 h-5"></i>
                     <span id="analyze-text">Analyze Link</span>
                 </button>
             </div>
-
-            <!-- Quick Link Samples -->
-            <div class="flex flex-wrap items-center justify-between text-xs text-slate-400 gap-2 pt-3 border-t border-slate-800/80">
-                <div class="flex items-center space-x-2 font-mono text-[11px]">
-                    <span class="text-slate-500">Examples:</span>
-                    <button onclick="setSampleUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" class="hover:text-brand-400 underline">Rickroll</button>
-                    <span>•</span>
-                    <button onclick="setSampleUrl('https://www.youtube.com/watch?v=jfKfPfyJRdk')" class="hover:text-brand-400 underline">Lofi Girl</button>
-                </div>
-                <div class="flex items-center space-x-1 text-emerald-400 font-mono text-[11px]">
-                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
-                    <span>Direct Server Tunnel Stream</span>
-                </div>
-            </div>
         </div>
 
         <!-- Video Info & Config Panel -->
-        <div id="media-engine-card" class="hidden max-w-4xl mx-auto space-y-6">
+        <div id="media-engine-card" class="hidden space-y-6">
             
             <!-- Video Info Preview Header -->
             <div class="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col md:flex-row gap-6 items-center">
-                <div class="relative rounded-2xl overflow-hidden group w-full md:w-80 aspect-video bg-slate-950 shrink-0 border border-slate-800 shadow-xl">
+                <div class="relative rounded-2xl overflow-hidden group w-full md:w-72 aspect-video bg-slate-950 shrink-0 border border-slate-800 shadow-xl">
                     <img id="yt-thumb" src="" alt="Video Thumbnail" class="w-full h-full object-cover">
-                    <div class="absolute bottom-2 right-2 px-2 py-1 bg-black/80 backdrop-blur rounded-lg text-[11px] font-mono font-bold text-white flex items-center space-x-1">
-                        <i data-lucide="clock" class="w-3 h-3 text-brand-400"></i>
-                        <span id="yt-duration">--:--</span>
-                    </div>
                 </div>
 
-                <div class="flex-grow space-y-3 w-full">
+                <div class="flex-grow space-y-2 w-full">
                     <div class="flex flex-wrap items-center gap-2">
                         <span class="px-2.5 py-1 rounded-lg bg-brand-500/10 text-brand-400 border border-brand-500/20 text-xs font-mono font-bold">
                             ID: <span id="yt-id-display">---</span>
@@ -168,27 +123,18 @@
                         </span>
                     </div>
 
-                    <h2 id="yt-title" class="text-lg sm:text-xl font-extrabold text-white leading-snug">
+                    <h2 id="yt-title" class="text-lg font-extrabold text-white leading-snug">
                         Loading metadata...
                     </h2>
-
-                    <div class="pt-1 flex flex-wrap gap-2 text-xs font-mono">
-                        <span class="px-2.5 py-1 rounded-md bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center space-x-1">
-                            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i>
-                            <span>Direct API Stream Ready</span>
-                        </span>
-                    </div>
                 </div>
             </div>
 
-            <!-- Download Options Box -->
             <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-6">
                 <div class="flex items-center justify-between border-b border-slate-800 pb-4">
                     <div class="flex items-center space-x-3">
                         <i data-lucide="sliders" class="w-5 h-5 text-brand-400"></i>
-                        <h3 class="text-base font-bold text-white">Download & Format Settings</h3>
+                        <h3 class="text-base font-bold text-white">Format & Quality Settings</h3>
                     </div>
-                    <span class="text-xs text-slate-400 font-mono" id="download-mode-indicator">Mode: Video + Audio</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
@@ -198,73 +144,56 @@
                         <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider font-semibold">
                             1. Container Format
                         </label>
-                        <div class="relative">
-                            <select id="select-format" onchange="handleFormatChange()" class="w-full pl-4 pr-10 py-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer">
-                                <option value="mp4" selected>MP4 (Video + Audio)</option>
-                                <option value="webm">WEBM (High Quality Video)</option>
-                                <option value="mp3">MP3 (Audio Only - High Bitrate)</option>
-                                <option value="m4a">M4A (AAC Audio Only)</option>
-                                <option value="opus">OPUS (Raw Web Audio)</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                            </div>
-                        </div>
+                        <select id="select-format" onchange="handleFormatChange()" class="w-full p-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="mp4" selected>MP4 (Video + Audio)</option>
+                            <option value="webm">WEBM (Video)</option>
+                            <option value="mp3">MP3 (Audio Only)</option>
+                            <option value="m4a">M4A (AAC Audio)</option>
+                            <option value="opus">OPUS (Raw Audio)</option>
+                        </select>
                     </div>
 
-                    <!-- Video Resolution / Audio Bitrate Selection -->
+                    <!-- Video Quality / Audio Bitrate Selection -->
                     <div class="space-y-2">
                         <label id="label-quality" class="block text-xs font-mono text-slate-400 uppercase tracking-wider font-semibold">
-                            2. Max Video Resolution
+                            2. Quality / Resolution
                         </label>
-                        <div class="relative">
-                            <select id="select-quality" class="w-full pl-4 pr-10 py-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer">
-                                <option value="max">Maximum Available (4K / 8K)</option>
-                                <option value="2160">4K Ultra HD (2160p)</option>
-                                <option value="1440">2K QHD (1440p)</option>
-                                <option value="1080" selected>1080p Full HD</option>
-                                <option value="720">720p HD</option>
-                                <option value="480">480p SD</option>
-                                <option value="360">360p Compact</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                            </div>
-                        </div>
+                        <select id="select-quality" class="w-full p-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="max" selected>Maximum (4K / 2160p)</option>
+                            <option value="1080">1080p Full HD</option>
+                            <option value="720">720p HD</option>
+                            <option value="480">480p SD</option>
+                            <option value="360">360p Low</option>
+                        </select>
                     </div>
 
                     <!-- Codec / FPS Selector -->
                     <div id="container-extra-opt" class="space-y-2">
                         <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider font-semibold">
-                            3. Video Codec
+                            3. Codec & FPS
                         </label>
-                        <div class="relative">
-                            <select id="select-codec" class="w-full pl-4 pr-10 py-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500 appearance-none cursor-pointer">
-                                <option value="h264" selected>H.264 (Best Compatibility)</option>
-                                <option value="vp9">VP9 (High Quality YouTube)</option>
-                                <option value="av1">AV1 (Next-Gen Efficiency)</option>
-                            </select>
-                            <div class="absolute inset-y-0 right-0 pr-3.5 flex items-center pointer-events-none text-slate-400">
-                                <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                            </div>
-                        </div>
+                        <select id="select-codec" class="w-full p-3.5 bg-slate-950 border border-slate-700/80 rounded-xl text-white font-medium text-sm outline-none focus:ring-2 focus:ring-brand-500">
+                            <option value="h264" selected>H.264 (60 FPS)</option>
+                            <option value="vp9">VP9 (60 FPS)</option>
+                            <option value="av1">AV1 (30 FPS)</option>
+                        </select>
                     </div>
 
                 </div>
 
                 <!-- Download Action Button -->
                 <div class="pt-2">
-                    <button onclick="requestDownload()" id="btn-start-download" class="w-full py-4 px-6 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-600 hover:from-emerald-400 hover:to-brand-500 text-white font-extrabold text-base rounded-2xl flex items-center justify-center space-x-3 shadow-xl glow-brand transition-all">
-                        <i data-lucide="download-cloud" id="dl-icon" class="w-6 h-6"></i>
+                    <button onclick="requestDownload()" id="btn-start-download" class="w-full py-4 px-6 bg-gradient-to-r from-emerald-500 via-teal-500 to-brand-600 hover:from-emerald-400 hover:to-brand-500 text-white font-extrabold text-base rounded-2xl flex items-center justify-center space-x-3 shadow-xl transition-all">
+                        <i data-lucide="download-cloud" class="w-6 h-6"></i>
                         <span id="dl-btn-text">Download Media File Now</span>
                     </button>
                 </div>
 
-                <!-- Status & Error Box -->
+                <!-- Status & Console Box -->
                 <div id="status-dashboard" class="hidden p-5 bg-slate-950/90 rounded-2xl border border-slate-800 space-y-3">
                     <div class="flex items-center space-x-3 text-xs font-mono">
                         <i data-lucide="loader" id="status-spinner" class="w-4 h-4 text-brand-400 animate-spin"></i>
-                        <span id="status-message" class="text-slate-300">Requesting media stream from API instance...</span>
+                        <span id="status-message" class="text-slate-300">Initializing multi-node stream engine...</span>
                     </div>
                     
                     <!-- Direct Link Result Output -->
@@ -272,13 +201,13 @@
                         <div class="flex items-center space-x-3 text-emerald-400">
                             <i data-lucide="check-circle" class="w-6 h-6 shrink-0"></i>
                             <div>
-                                <div class="font-bold text-sm text-white">Direct Stream Link Generated!</div>
+                                <div class="font-bold text-sm text-white">Stream Link Resolved!</div>
                                 <div class="text-xs text-slate-400 font-mono" id="direct-file-details">Ready for direct browser download.</div>
                             </div>
                         </div>
                         <a id="direct-download-anchor" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-2 transition-all shadow-lg text-center">
-                            <i data-lucide="external-link" class="w-4 h-4"></i>
-                            <span>Save File to Device</span>
+                            <i data-lucide="download" class="w-4 h-4"></i>
+                            <span>Save File Now</span>
                         </a>
                     </div>
                 </div>
@@ -288,48 +217,42 @@
 
     </main>
 
-    <!-- Footer -->
-    <footer class="glass-panel border-t border-slate-800/80 py-6">
-        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-2 font-mono">
-            <p>© 2026 MediaForge Ultra. Direct Cobalt REST API Client Integration.</p>
-        </div>
+    <footer class="glass-panel border-t border-slate-800/80 py-4 text-center text-xs text-slate-500 font-mono">
+        © 2026 MediaForge Ultra • Dynamic REST API Failover Client
     </footer>
 
-    <!-- Toast Notification Overlay -->
-    <div id="toast" class="fixed bottom-6 right-6 transform translate-y-24 opacity-0 transition-all duration-300 glass-panel border border-brand-500/50 p-4 rounded-2xl shadow-2xl flex items-center space-x-3 z-50 max-w-md">
-        <div id="toast-icon" class="p-2 rounded-xl bg-brand-500/20 text-brand-400">
-            <i data-lucide="info" class="w-5 h-5"></i>
-        </div>
-        <div>
-            <div id="toast-title" class="text-xs font-bold text-white">Notification</div>
-            <div id="toast-msg" class="text-xs text-slate-400 font-mono">Operation executed.</div>
-        </div>
-    </div>
-
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Primary public API instances array for automatic failover resilience
-        const COBALT_API_INSTANCES = [
-            'https://api.cobalt.tools/',
-            'https://cobalt-api.kwiatekmom.tokyo/',
-            'https://cobalt.m3u8.vt.tu-berlin.de/api/'
+        // Extended array of public Cobalt REST API instances
+        const COBALT_INSTANCES = [
+            'https://api.cobalt.tools',
+            'https://cobalt-api.kwi.mobi',
+            'https://co.wuk.sh',
+            'https://cobalt.m3u8.cx',
+            'https://co.meow.host',
+            'https://api.cobalt.life'
+        ];
+
+        // Piped stream extractors as resilient second-tier fallback
+        const PIPED_INSTANCES = [
+            'https://pipedapi.kavin.rocks',
+            'https://api.piped.video',
+            'https://pipedapi.tokhmi.xyz'
         ];
 
         let activeVideoUrl = '';
         let activeVideoId = '';
-        let videoMeta = { title: '', author: '', duration: '' };
+        let videoMeta = { title: '', author: '' };
 
-        function clearYtInput() {
-            document.getElementById('yt-url-input').value = '';
-            document.getElementById('media-engine-card').classList.add('hidden');
-            document.getElementById('status-dashboard').classList.add('hidden');
-        }
-
-        function setSampleUrl(url) {
-            document.getElementById('yt-url-input').value = url;
-            analyzeVideo();
+        async function pasteClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                document.getElementById('yt-url-input').value = text;
+                analyzeVideo();
+            } catch (err) {
+                console.log('Clipboard paste error');
+            }
         }
 
         function parseYouTubeID(url) {
@@ -338,209 +261,170 @@
             return (match && match[2].length === 11) ? match[2] : null;
         }
 
-        // 1. Metadata analysis step
         async function analyzeVideo() {
             const rawUrl = document.getElementById('yt-url-input').value.trim();
             const videoId = parseYouTubeID(rawUrl);
 
-            if (!videoId) {
-                showToast('Invalid URL', 'Please paste a valid YouTube video link.', 'alert-triangle');
-                return;
-            }
+            if (!videoId) return;
 
             activeVideoUrl = `https://www.youtube.com/watch?v=${videoId}`;
             activeVideoId = videoId;
 
-            // Update UI elements
             document.getElementById('yt-id-display').textContent = videoId;
-            document.getElementById('yt-thumb').src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            document.getElementById('yt-thumb').src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
             document.getElementById('media-engine-card').classList.remove('hidden');
             document.getElementById('status-dashboard').classList.add('hidden');
 
-            const analyzeBtn = document.getElementById('btn-analyze');
-            const analyzeText = document.getElementById('analyze-text');
-            const analyzeIcon = document.getElementById('analyze-icon');
-
-            analyzeText.textContent = 'Fetching info...';
-            analyzeIcon.setAttribute('data-lucide', 'loader');
-            analyzeIcon.classList.add('animate-spin');
-            lucide.createIcons();
-
             try {
-                // Fetch real video metadata using YouTube oEmbed REST API
                 const oembedRes = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(activeVideoUrl)}&format=json`);
                 if (oembedRes.ok) {
                     const data = await oembedRes.json();
                     videoMeta.title = data.title;
                     videoMeta.author = data.author_name;
-
                     document.getElementById('yt-title').textContent = data.title;
                     document.getElementById('yt-author-name').textContent = data.author_name;
-                } else {
-                    throw new Error('oEmbed failed');
                 }
             } catch (err) {
                 document.getElementById('yt-title').textContent = `YouTube Video [${videoId}]`;
-                document.getElementById('yt-author-name').textContent = 'YouTube Creator';
-            } finally {
-                analyzeText.textContent = 'Analyze Link';
-                analyzeIcon.setAttribute('data-lucide', 'search');
-                analyzeIcon.classList.remove('animate-spin');
-                lucide.createIcons();
-                showToast('Video Verified', 'Select your preferred media format below.', 'check-circle');
             }
         }
 
-        // Adjust UI select options based on Audio vs Video choice
         function handleFormatChange() {
             const format = document.getElementById('select-format').value;
             const labelQuality = document.getElementById('label-quality');
             const selectQuality = document.getElementById('select-quality');
             const codecContainer = document.getElementById('container-extra-opt');
-            const modeIndicator = document.getElementById('download-mode-indicator');
 
             if (format === 'mp3' || format === 'm4a' || format === 'opus') {
-                modeIndicator.textContent = 'Mode: Audio Only';
                 labelQuality.textContent = '2. Audio Bitrate';
                 codecContainer.classList.add('opacity-30', 'pointer-events-none');
                 selectQuality.innerHTML = `
-                    <option value="320" selected>320 kbps (Best Quality)</option>
+                    <option value="320" selected>320 kbps (Best)</option>
                     <option value="256">256 kbps (High)</option>
                     <option value="128">128 kbps (Standard)</option>
                 `;
             } else {
-                modeIndicator.textContent = 'Mode: Video + Audio';
-                labelQuality.textContent = '2. Max Video Resolution';
+                labelQuality.textContent = '2. Quality / Resolution';
                 codecContainer.classList.remove('opacity-30', 'pointer-events-none');
                 selectQuality.innerHTML = `
-                    <option value="max" selected>Maximum Available (4K / 8K)</option>
-                    <option value="2160">4K Ultra HD (2160p)</option>
-                    <option value="1440">2K QHD (1440p)</option>
+                    <option value="max" selected>Maximum (4K / 2160p)</option>
                     <option value="1080">1080p Full HD</option>
                     <option value="720">720p HD</option>
                     <option value="480">480p SD</option>
-                    <option value="360">360p Compact</option>
+                    <option value="360">360p Low</option>
                 `;
             }
         }
 
-        // 2. Request real media download via Cobalt API
         async function requestDownload() {
-            if (!activeVideoUrl) {
-                showToast('Error', 'Please analyze a YouTube link first.', 'alert-circle');
-                return;
-            }
+            if (!activeVideoUrl) return;
 
             const format = document.getElementById('select-format').value;
             const qualityVal = document.getElementById('select-quality').value;
             const codecVal = document.getElementById('select-codec').value;
-
-            const isAudioOnly = (format === 'mp3' || format === 'm4a' || format === 'opus');
-
-            // Build payload according to official Cobalt v10 API specifications
-            const payload = {
-                url: activeVideoUrl,
-                downloadMode: isAudioOnly ? 'audio' : 'auto',
-                videoQuality: isAudioOnly ? '1080' : qualityVal,
-                audioFormat: isAudioOnly ? format : 'mp3',
-                audioBitrate: isAudioOnly ? qualityVal : '320',
-                youtubeVideoCodec: codecVal,
-                youtubeVideoContainer: format === 'webm' ? 'webm' : 'mp4',
-                filenameStyle: 'basic',
-                alwaysProxy: true
-            };
+            const isAudio = (format === 'mp3' || format === 'm4a' || format === 'opus');
 
             const dashboard = document.getElementById('status-dashboard');
             const statusMsg = document.getElementById('status-message');
             const statusSpinner = document.getElementById('status-spinner');
             const directBox = document.getElementById('direct-link-box');
             const dlBtn = document.getElementById('btn-start-download');
-            const dlBtnText = document.getElementById('dl-btn-text');
 
             dashboard.classList.remove('hidden');
             directBox.classList.add('hidden');
             statusSpinner.classList.remove('hidden');
-            statusMsg.textContent = 'Connecting to high-speed Cobalt API server...';
-
             dlBtn.disabled = true;
-            dlBtnText.textContent = 'Processing Media...';
 
             let downloadUrl = null;
-            let filename = '';
 
-            // Attempt call to primary Cobalt instance with automatic failover fallback
-            for (let i = 0; i < COBALT_API_INSTANCES.length; i++) {
-                const apiEndpoint = COBALT_API_INSTANCES[i];
+            // Tier 1: Multi-node Cobalt API request loop
+            const cobaltPayload = {
+                url: activeVideoUrl,
+                downloadMode: isAudio ? 'audio' : 'auto',
+                videoQuality: isAudio ? '1080' : qualityVal,
+                audioFormat: isAudio ? format : 'mp3',
+                audioBitrate: isAudio ? qualityVal : '320',
+                youtubeVideoCodec: codecVal,
+                youtubeVideoContainer: format === 'webm' ? 'webm' : 'mp4'
+            };
+
+            for (let i = 0; i < COBALT_INSTANCES.length; i++) {
+                const nodeUrl = COBALT_INSTANCES[i];
+                statusMsg.textContent = `Connecting to Cobalt Node ${i + 1}/${COBALT_INSTANCES.length}...`;
+
                 try {
-                    statusMsg.textContent = `Requesting stream URL from API server (${i + 1}/${COBALT_API_INSTANCES.length})...`;
-                    
-                    const response = await fetch(apiEndpoint, {
+                    const response = await fetch(nodeUrl, {
                         method: 'POST',
                         headers: {
                             'Accept': 'application/json',
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify(cobaltPayload)
                     });
 
-                    if (!response.ok) {
+                    if (response.status === 429) {
+                        statusMsg.textContent = `Node ${i + 1} rate limited (429). Switching node...`;
                         continue;
                     }
 
-                    const data = await response.json();
+                    if (!response.ok) continue;
 
-                    if (data.status === 'tunnel' || data.status === 'redirect') {
+                    const data = await response.json();
+                    if (data.url) {
                         downloadUrl = data.url;
-                        filename = data.filename || `${videoMeta.title || 'video'}.${format}`;
                         break;
                     } else if (data.status === 'picker' && data.picker && data.picker.length > 0) {
                         downloadUrl = data.picker[0].url;
                         break;
-                    } else if (data.status === 'error') {
-                        console.warn('API error response:', data);
                     }
-                } catch (e) {
-                    console.warn(`Cobalt instance ${apiEndpoint} failed:`, e);
+                } catch (err) {
+                    console.warn(`Cobalt Node ${nodeUrl} error:`, err);
+                }
+            }
+
+            // Tier 2: Piped API Fallback Loop
+            if (!downloadUrl) {
+                statusMsg.textContent = 'Cobalt nodes busy. Trying Piped fallback stream engine...';
+                for (let j = 0; j < PIPED_INSTANCES.length; j++) {
+                    const pipedNode = PIPED_INSTANCES[j];
+                    try {
+                        const pipedRes = await fetch(`${pipedNode}/streams/${activeVideoId}`);
+                        if (!pipedRes.ok) continue;
+
+                        const pipedData = await pipedRes.json();
+                        if (isAudio && pipedData.audioStreams && pipedData.audioStreams.length > 0) {
+                            downloadUrl = pipedData.audioStreams[0].url;
+                            break;
+                        } else if (pipedData.videoStreams && pipedData.videoStreams.length > 0) {
+                            // Find matching resolution or fallback to first stream
+                            const stream = pipedData.videoStreams.find(s => s.quality.includes(qualityVal)) || pipedData.videoStreams[0];
+                            downloadUrl = stream.url;
+                            break;
+                        }
+                    } catch (err) {
+                        console.warn(`Piped Node ${pipedNode} failed:`, err);
+                    }
                 }
             }
 
             dlBtn.disabled = false;
-            dlBtnText.textContent = 'Download Media File Now';
 
+            // Tier 3: Direct Link Output / Web Gateway
             if (downloadUrl) {
                 statusSpinner.classList.add('hidden');
-                statusMsg.textContent = 'Media stream link successfully resolved!';
+                statusMsg.textContent = 'Stream link successfully extracted!';
 
-                document.getElementById('direct-file-details').textContent = `${format.toUpperCase()} • ${isAudioOnly ? qualityVal + 'kbps' : qualityVal + 'p'} • High Quality`;
+                document.getElementById('direct-file-details').textContent = `${format.toUpperCase()} • Direct High-Speed Stream`;
                 const anchor = document.getElementById('direct-download-anchor');
                 anchor.href = downloadUrl;
-                anchor.setAttribute('download', filename);
+                anchor.setAttribute('download', `${videoMeta.title || 'media'}.${format}`);
 
                 directBox.classList.remove('hidden');
-                showToast('Success!', 'Direct download link generated.', 'check-circle');
-
-                // Trigger direct click
                 anchor.click();
             } else {
                 statusSpinner.classList.add('hidden');
-                statusMsg.innerHTML = '<span class="text-rose-400 font-bold">API rate limit reached or media restricted by YouTube. Please try another quality or option.</span>';
-                showToast('Download Error', 'Could not retrieve media URL from backend nodes.', 'alert-triangle');
+                statusMsg.innerHTML = `<span class="text-rose-400 font-bold">API nodes rate-limited. <a href="https://cobalt.tools" target="_blank" class="underline hover:text-white">Click here to open Web Mirror directly</a></span>`;
             }
-        }
-
-        // Notification Toast
-        function showToast(title, message, iconName = 'info') {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-title').textContent = title;
-            document.getElementById('toast-msg').textContent = message;
-            
-            toast.classList.remove('translate-y-24', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
-
-            setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-24', 'opacity-0');
-            }, 3500);
         }
     </script>
 </body>
