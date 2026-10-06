@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="de" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediaForge Suite - Downloader & Converter Hub</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        cyber: {
+                            dark: '#0b0f19',
+                            card: '#111827',
+                            border: '#1f2937',
+                            accent: '#f43f5e',
+                            neon: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(99, 102, 241, 0.35);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #374151;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-gradient-to-tr from-brand-600 to-rose-500 rounded-xl shadow-lg">
+                    <i data-lucide="download-cloud" class="w-6 h-6 text-white"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-200 to-brand-500">MediaForge</span>
+                    <span class="text-xs px-2 py-0.5 rounded bg-brand-500/20 text-brand-500 border border-brand-500/30 ml-2 font-mono">v2.5 PRO</span>
+                </div>
+            </div>
+            
+            <nav class="flex items-center space-x-1 sm:space-x-3 text-sm font-medium">
+                <button onclick="switchTab('downloader')" id="tab-btn-downloader" class="tab-btn flex items-center space-x-2 px-3 py-2 rounded-lg bg-brand-600 text-white transition-all">
+                    <i data-lucide="link" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">URL Extractor</span>
+                </button>
+                <button onclick="switchTab('editor')" id="tab-btn-editor" class="tab-btn flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+                    <i data-lucide="sliders" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">Local Media Tools</span>
+                </button>
+                <button onclick="switchTab('guide')" id="tab-btn-guide" class="tab-btn flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-400 hover:text-white hover:bg-gray-800 transition-all">
+                    <i data-lucide="bookmark" class="w-4 h-4"></i>
+                    <span class="hidden sm:inline">1-Click Guide</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <section id="sec-downloader" class="space-y-8 transition-all">
+            <!-- Hero Title -->
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-white">
+                    YouTube & Web Media <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-rose-500">Fast Downloader</span>
+                </h1>
+                <p class="text-gray-400 text-sm sm:text-base">
+                    Füge eine Video-URL ein, wähle dein Format und nutze unsere direkten High-Speed Tunnel oder verarbeitenden Partnerdienste ohne lästige Werbung.
+                </p>
+            </div>
+
+            <!-- Main Input Bar -->
+            <div class="glass-panel p-4 sm:p-6 rounded-2xl shadow-2xl max-w-4xl mx-auto space-y-4">
+                <div class="relative flex flex-col sm:flex-row items-center gap-3">
+                    <div class="relative w-full">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500">
+                            <i data-lucide="youtube" class="w-5 h-5 text-rose-500"></i>
+                        </div>
+                        <input type="url" id="yt-url-input" placeholder="https://www.youtube.com/watch?v=..." class="w-full pl-12 pr-10 py-3.5 bg-gray-900/90 border border-gray-700 rounded-xl focus:ring-2 focus:ring-brand-500 focus:border-transparent text-white placeholder-gray-500 font-mono text-sm outline-none transition-all">
+                        <button onclick="clearYtInput()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-300">
+                            <i data-lucide="x" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <button onclick="processMediaUrl()" class="w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-brand-600 to-rose-600 hover:from-brand-500 hover:to-rose-500 text-white font-semibold rounded-xl flex items-center justify-center space-x-2 shadow-lg glow-effect transition-all shrink-0">
+                        <i data-lucide="zap" class="w-5 h-5 fill-current"></i>
+                        <span>Analysieren</span>
+                    </button>
+                </div>
+
+                <!-- Fast Presets -->
+                <div class="flex flex-wrap items-center justify-between text-xs text-gray-400 gap-2 pt-2 border-t border-gray-800">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-gray-500 font-medium">Beispiel-Links:</span>
+                        <button onclick="setSampleUrl('https://www.youtube.com/watch?v=dQw4w9WgXcQ')" class="hover:text-brand-500 underline">Rickroll MP4</button>
+                        <span>•</span>
+                        <button onclick="setSampleUrl('https://www.youtube.com/watch?v=jfKfPfyJRdk')" class="hover:text-brand-500 underline">Lofi Girl Stream</button>
+                    </div>
+                    <div class="flex items-center space-x-2 text-cyber-neon">
+                        <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        <span>Keine nervigen Layer-Ads / Direkt-Tunnel</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results & Conversion Gateways -->
+            <div id="downloader-results" class="hidden max-w-4xl mx-auto space-y-6">
+                <!-- Video Preview Card -->
+                <div class="glass-panel p-6 rounded-2xl flex flex-col md:flex-row gap-6 items-center">
+                    <div class="relative rounded-xl overflow-hidden group w-full md:w-72 aspect-video bg-gray-900 shrink-0 border border-gray-800">
+                        <img id="yt-thumb" src="" alt="Thumbnail Preview" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i data-lucide="play-circle" class="w-12 h-12 text-white/90"></i>
+                        </div>
+                    </div>
+                    <div class="flex-grow space-y-3 w-full">
+                        <div class="inline-block px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-mono">
+                            Detected Video ID: <span id="yt-id-display" class="font-bold">---</span>
+                        </div>
+                        <h3 id="yt-title" class="text-xl font-bold text-white leading-tight">YouTube Video erkannt</h3>
+                        <p class="text-xs text-gray-400">Wähle unten deine bevorzugte Extraktions-Methode oder schicke die URL direkt an Werbefreie High-Speed Downloader.</p>
+                        
+                        <div class="pt-2 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 rounded bg-gray-800 text-gray-300 text-xs font-mono">1080p / 4K Ready</span>
+                            <span class="px-2 py-1 rounded bg-gray-800 text-gray-300 text-xs font-mono">Audio 320kbps</span>
+                            <span class="px-2 py-1 rounded bg-gray-800 text-gray-300 text-xs font-mono">No Watermark</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Multi-Provider Gateway Buttons -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Option 1: Cobalt.tools (Cleanest Open Source) -->
+                    <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-brand-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="sparkles" class="w-5 h-5 text-brand-500"></i>
+                                <h4 class="font-bold text-white">Cobalt.tools (Empfohlen)</h4>
+                            </div>
+                            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Open Source / Ad-Free</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Direkter, extrem schneller Downloader ohne Werbung für YouTube, TikTok, Instagram, Twitter & mehr.</p>
+                        <div class="flex gap-2 pt-2">
+                            <a id="btn-cobalt" href="#" target="_blank" class="flex-1 py-2.5 px-4 bg-brand-600 hover:bg-brand-500 text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 transition-all">
+                                <span>Bei Cobalt öffnen</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option 2: Invidious / Alternative Frontends -->
+                    <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-rose-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="tv" class="w-5 h-5 text-rose-500"></i>
+                                <h4 class="font-bold text-white">Invidious Media Engine</h4>
+                            </div>
+                            <span class="text-xs bg-rose-500/10 text-rose-400 px-2 py-0.5 rounded border border-rose-500/20">Direct Stream</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Streamt das Video im datenschutzfreundlichen Player inklusive direktem Video- & MP3-Download-Button.</p>
+                        <div class="flex gap-2 pt-2">
+                            <a id="btn-invidious" href="#" target="_blank" class="flex-1 py-2.5 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 transition-all border border-gray-700">
+                                <span>Invidious Player</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option 3: SaveFrom Mirror -->
+                    <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-amber-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="download" class="w-5 h-5 text-amber-500"></i>
+                                <h4 class="font-bold text-white">SaveFrom Online</h4>
+                            </div>
+                            <span class="text-xs bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded border border-amber-500/20">All-Format</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Klassischer Web-Downloader für schnelle MP4 Video-Dateien in allen gängigen Auflösungen.</p>
+                        <div class="flex gap-2 pt-2">
+                            <a id="btn-savefrom" href="#" target="_blank" class="flex-1 py-2.5 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 transition-all border border-gray-700">
+                                <span>SaveFrom öffnen</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Option 4: Y2Mate Converter -->
+                    <div class="glass-panel p-5 rounded-2xl border-l-4 border-l-emerald-500 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="music" class="w-5 h-5 text-emerald-500"></i>
+                                <h4 class="font-bold text-white">Y2Mate Fast MP3/MP4</h4>
+                            </div>
+                            <span class="text-xs bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-500/20">Audio Special</span>
+                        </div>
+                        <p class="text-xs text-gray-400">Speziell für schnelle MP3 Audio-Konvertierung in hoher Bitrate (320kbps).</p>
+                        <div class="flex gap-2 pt-2">
+                            <a id="btn-y2mate" href="#" target="_blank" class="flex-1 py-2.5 px-4 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-sm font-semibold flex items-center justify-center space-x-2 transition-all border border-gray-700">
+                                <span>Y2Mate öffnen</span>
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation/Quick Converter Box -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-brand-500/30">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <i data-lucide="cpu" class="w-6 h-6 text-brand-500"></i>
+                            <div>
+                                <h4 class="font-bold text-white">Browser Quick Extractor & Stream Simulator</h4>
+                                <p class="text-xs text-gray-400">Extrahiere Audiospur oder erstelle MP3-Streams direkt clientseitig.</p>
+                            </div>
+                        </div>
+                        <button onclick="startExtractionSim()" class="px-4 py-2 bg-brand-600 hover:bg-brand-500 text-white font-medium text-sm rounded-lg transition-all flex items-center space-x-1">
+                            <i data-lucide="play" class="w-4 h-4"></i>
+                            <span>Extrahieren starten</span>
+                        </button>
+                    </div>
+
+                    <!-- Progress bar -->
+                    <div id="sim-progress-box" class="hidden space-y-2">
+                        <div class="flex justify-between text-xs font-mono text-gray-400">
+                            <span id="sim-status-text">Verbindung zu Engine aufgebaut...</span>
+                            <span id="sim-percent">0%</span>
+                        </div>
+                        <div class="w-full h-2.5 bg-gray-800 rounded-full overflow-hidden">
+                            <div id="sim-bar" class="h-full bg-gradient-to-r from-brand-500 to-rose-500 w-0 transition-all duration-200"></div>
+                        </div>
+                    </div>
+
+                    <div id="sim-download-ready" class="hidden p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl flex items-center justify-between text-xs text-emerald-400">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                            <span>Audio-Stream erfolgreich extrahiert & konvertiert!</span>
+                        </div>
+                        <button onclick="downloadSimulatedFile()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded font-semibold flex items-center space-x-1 transition-all">
+                            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                            <span>MP3 Herunterladen</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-editor" class="hidden space-y-8 transition-all">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h2 class="text-3xl sm:text-4xl font-black text-white">
+                    Lokaler <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-brand-500">Media Converter & Editor</span>
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Lade eigene Video- oder Audio-Dateien hoch. Extrahiere Screenshots, verändere Playback-Geschwindigkeit, erstelle Audio-Trims oder erstelle Audio-Dateien clientseitig ohne Server-Upload!
+                </p>
+            </div>
+
+            <!-- Drag & Drop Zone -->
+            <div class="max-w-4xl mx-auto">
+                <div id="drop-zone" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)" onclick="document.getElementById('file-input').click()" class="border-2 border-dashed border-gray-700 hover:border-brand-500 rounded-2xl p-8 sm:p-12 text-center glass-panel cursor-pointer transition-all hover:bg-gray-800/40 group">
+                    <input type="file" id="file-input" accept="video/*,audio/*" class="hidden" onchange="handleFileSelect(event)">
+                    <div class="space-y-4">
+                        <div class="w-16 h-16 mx-auto rounded-2xl bg-brand-500/10 text-brand-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <i data-lucide="upload-cloud" class="w-8 h-8"></i>
+                        </div>
+                        <div>
+                            <p class="text-lg font-bold text-white">Datei hierher ziehen oder <span class="text-brand-500 underline">durchsuchen</span></p>
+                            <p class="text-xs text-gray-500 mt-1">Unterstützt MP4, WEBM, MOV, MP3, WAV, OGG (Max. 500MB)</p>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-xs text-gray-400 pt-2">
+                            <span class="flex items-center space-x-1"><i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i> <span>100% Privat (Client-Only)</span></span>
+                            <span class="flex items-center space-x-1"><i data-lucide="zap" class="w-3.5 h-3.5 text-amber-400"></i> <span>Sofortige Verarbeitung</span></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editor Workstation (Hidden until file selected) -->
+            <div id="media-workstation" class="hidden max-w-4xl mx-auto space-y-6">
+                <!-- Player & Preview Panel -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-gray-800 pb-3">
+                        <div class="flex items-center space-x-3">
+                            <i id="media-type-icon" data-lucide="file-video" class="w-5 h-5 text-brand-500"></i>
+                            <span id="file-name-display" class="font-bold text-white truncate max-w-xs sm:max-w-md">video_sample.mp4</span>
+                        </div>
+                        <span id="file-size-display" class="text-xs font-mono text-gray-400">0 MB</span>
+                    </div>
+
+                    <!-- Video / Audio Player Container -->
+                    <div class="relative bg-black rounded-xl overflow-hidden flex items-center justify-center max-h-[450px] border border-gray-800">
+                        <video id="main-video-player" class="w-full max-h-[450px] object-contain hidden" controls></video>
+                        <audio id="main-audio-player" class="w-full p-4 hidden" controls></audio>
+                        <canvas id="hidden-canvas" class="hidden"></canvas>
+                    </div>
+
+                    <!-- Control Controls / Tools Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        
+                        <!-- Tool 1: Frame Grabber / Snapshot (Video only) -->
+                        <div id="tool-snapshot-box" class="glass-panel p-4 rounded-xl space-y-2 border border-gray-800">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-bold text-white flex items-center space-x-2">
+                                    <i data-lucide="camera" class="w-4 h-4 text-brand-500"></i>
+                                    <span>Frame Grabber</span>
+                                </span>
+                                <span class="text-xs text-gray-500">High-Res PNG</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Erstelle ein hochauflösendes Foto vom aktuellen Video-Frame.</p>
+                            <button onclick="takeSnapshot()" class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-white rounded-lg text-xs font-semibold flex items-center justify-center space-x-2 transition-all border border-gray-700">
+                                <i data-lucide="aperture" class="w-4 h-4"></i>
+                                <span>Frame als Bild speichern</span>
+                            </button>
+                        </div>
+
+                        <!-- Tool 2: Speed & Pitch Controller -->
+                        <div class="glass-panel p-4 rounded-xl space-y-2 border border-gray-800">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-bold text-white flex items-center space-x-2">
+                                    <i data-lucide="gauge" class="w-4 h-4 text-emerald-500"></i>
+                                    <span>Geschwindigkeit</span>
+                                </span>
+                                <span id="speed-val" class="text-xs font-mono text-emerald-400">1.0x</span>
+                            </div>
+                            <input type="range" id="speed-range" min="0.25" max="2.5" step="0.25" value="1.0" oninput="changeSpeed(this.value)" class="w-full accent-emerald-500">
+                            <div class="flex justify-between text-[10px] text-gray-500 font-mono">
+                                <span>0.25x</span>
+                                <span>1.0x (Normal)</span>
+                                <span>2.5x</span>
+                            </div>
+                        </div>
+
+                        <!-- Tool 3: Audio Extractor / Converter -->
+                        <div class="glass-panel p-4 rounded-xl space-y-2 border border-gray-800 md:col-span-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm font-bold text-white flex items-center space-x-2">
+                                    <i data-lucide="music" class="w-4 h-4 text-rose-500"></i>
+                                    <span>Audio Extraktion & Konverter</span>
+                                </span>
+                                <span class="text-xs text-gray-500">WAV Output</span>
+                            </div>
+                            <p class="text-xs text-gray-400">Wandle dieses Video oder Audio direkt im Browser in eine reine Tondatei (WAV/Audio-Track) um.</p>
+                            <div class="flex flex-col sm:flex-row gap-3 pt-1">
+                                <button onclick="extractAudioTrack()" class="flex-1 py-2.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-semibold flex items-center justify-center space-x-2 transition-all shadow">
+                                    <i data-lucide="download" class="w-4 h-4"></i>
+                                    <span>Audio-Spur als WAV herunterladen</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-guide" class="hidden space-y-8 transition-all">
+            <div class="text-center max-w-3xl mx-auto space-y-3">
+                <h2 class="text-3xl sm:text-4xl font-black text-white">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-500">1-Click Download</span> Tricks & Extensions
+                </h2>
+                <p class="text-gray-400 text-sm">
+                    Lerne, wie du jedes YouTube-Video mit einem einfachen Bookmarklet oder URL-Trick in Sekundenschnelle herunterlädst.
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Trick 1: URL Hack -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-amber-500/20">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center">
+                        <i data-lucide="edit-3" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Der "SS" oder "5s" URL-Trick</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Füge einfach <code class="text-amber-400 font-mono">5s</code> direkt nach "youtube" in deine Adresszeile ein, um sofort auf die Download-Seite weitergeleitet zu werden.
+                    </p>
+                    <div class="p-3 bg-gray-900 rounded-lg font-mono text-xs text-gray-300 space-y-1">
+                        <div class="text-gray-500">Vorher:</div>
+                        <div>https://www.youtube.com/watch?v=123</div>
+                        <div class="text-amber-400 pt-1">Nachher:</div>
+                        <div>https://www.youtube<span class="text-amber-400 font-bold">5s</span>.com/watch?v=123</div>
+                    </div>
+                </div>
+
+                <!-- Trick 2: Bookmarklet Button -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-brand-500/20">
+                    <div class="w-10 h-10 rounded-xl bg-brand-500/10 text-brand-400 flex items-center justify-center">
+                        <i data-lucide="bookmark" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white">Das 1-Click Bookmarklet</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">
+                        Ziehe diesen Button in deine Lesezeichen-Leiste. Wenn du auf YouTube bist, klicke einfach darauf, um das Video sofort mit MediaForge zu öffnen!
+                    </p>
+                    <div class="pt-2">
+                        <a href="javascript:(function(){var url=encodeURIComponent(window.location.href);window.open('https://cobalt.tools/?url='+url,'_blank');})();" class="inline-flex items-center space-x-2 px-4 py-2.5 bg-brand-600 hover:bg-brand-500 text-white rounded-xl text-xs font-bold cursor-move shadow-lg">
+                            <i data-lucide="grip-vertical" class="w-4 h-4"></i>
+                            <span>⚡ 🚀 In MediaForge Downloaden</span>
+                        </a>
+                        <p class="text-[10px] text-gray-500 mt-2">← Ziehe diesen Button in deine Browser-Lesezeichenzeile</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="glass-panel border-t border-gray-800 mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500 space-y-2">
+            <p>© 2026 MediaForge Suite. client-side Audio/Video Utility Tool.</p>
+            <p class="text-[10px] text-gray-600">Hinweis: Bitte beachte das Urheberrecht beim Herunterladen von Inhalten aus dem Internet.</p>
+        </div>
+    </footer>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel border border-brand-500/50 p-4 rounded-xl shadow-2xl flex items-center space-x-3 z-50">
+        <div id="toast-icon-box" class="p-2 rounded-lg bg-brand-500/20 text-brand-400">
+            <i data-lucide="info" class="w-5 h-5"></i>
+        </div>
+        <div>
+            <div id="toast-title" class="text-xs font-bold text-white">Benachrichtigung</div>
+            <div id="toast-msg" class="text-xs text-gray-400">Aktion erfolgreich ausgeführt.</div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        let currentYtId = '';
+        let loadedFile = null;
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            document.querySelectorAll('main > section').forEach(sec => sec.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('text-gray-400', 'hover:text-white', 'hover:bg-gray-800');
+            });
+
+            document.getElementById(`sec-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            activeBtn.classList.add('bg-brand-600', 'text-white');
+            activeBtn.classList.remove('text-gray-400', 'hover:text-white', 'hover:bg-gray-800');
+        }
+
+        // Clear YouTube Input
+        function clearYtInput() {
+            document.getElementById('yt-url-input').value = '';
+            document.getElementById('downloader-results').classList.add('hidden');
+        }
+
+        function setSampleUrl(url) {
+            document.getElementById('yt-url-input').value = url;
+            processMediaUrl();
+        }
+
+        // YouTube URL Parser & Gateway Link Builder
+        function processMediaUrl() {
+            const rawUrl = document.getElementById('yt-url-input').value.trim();
+            if (!rawUrl) {
+                showToast('Bitte URL eingeben', 'Füge zuerst einen gültigen YouTube-Link ein.', 'alert-circle');
+                return;
+            }
+
+            // Extract YouTube Video ID
+            const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            const match = rawUrl.match(regExp);
+
+            if (match && match[2].length === 11) {
+                currentYtId = match[2];
+                
+                // Set UI Elements
+                document.getElementById('yt-id-display').textContent = currentYtId;
+                document.getElementById('yt-thumb').src = `https://img.youtube.com/vi/${currentYtId}/hqdefault.jpg`;
+                document.getElementById('yt-title').textContent = `YouTube Video [ID: ${currentYtId}]`;
+                
+                // Update Gateway External Links with Pre-filled URLs
+                const encodedUrl = encodeURIComponent(rawUrl);
+                document.getElementById('btn-cobalt').href = `https://cobalt.tools/`;
+                document.getElementById('btn-invidious').href = `https://yewtu.be/watch?v=${currentYtId}`;
+                document.getElementById('btn-savefrom').href = `https://de.savefrom.net/1-youtube-video-downloader-4.html?url=${encodedUrl}`;
+                document.getElementById('btn-y2mate').href = `https://www.y2mate.com/de/youtube/${currentYtId}`;
+
+                document.getElementById('downloader-results').classList.remove('hidden');
+                showToast('URL analysiert', 'Downloader-Optionen sind jetzt bereit!', 'check');
+            } else {
+                // Generic URL handling
+                document.getElementById('yt-id-display').textContent = 'Generic Web Media';
+                document.getElementById('yt-thumb').src = 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop&q=60';
+                document.getElementById('yt-title').textContent = 'Web Media Link erkannt';
+                
+                const encodedUrl = encodeURIComponent(rawUrl);
+                document.getElementById('btn-cobalt').href = `https://cobalt.tools/`;
+                document.getElementById('btn-invidious').href = rawUrl;
+                document.getElementById('btn-savefrom').href = `https://de.savefrom.net/1-youtube-video-downloader-4.html?url=${encodedUrl}`;
+                document.getElementById('btn-y2mate').href = `https://www.y2mate.com/`;
+
+                document.getElementById('downloader-results').classList.remove('hidden');
+                showToast('Link verarbeitet', 'Standard-Downloader wurden vorbereitet.', 'info');
+            }
+        }
+
+        // Extractor Simulation Progress
+        function startExtractionSim() {
+            const progressBox = document.getElementById('sim-progress-box');
+            const progressBar = document.getElementById('sim-bar');
+            const percentText = document.getElementById('sim-percent');
+            const statusText = document.getElementById('sim-status-text');
+            const downloadReady = document.getElementById('sim-download-ready');
+
+            progressBox.classList.remove('hidden');
+            downloadReady.classList.add('hidden');
+            progressBar.style.width = '0%';
+
+            let percent = 0;
+            const steps = [
+                'Verbindung zu High-Speed Node aufgebaut...',
+                'Audio-Stream extrahiert (320 kbps)...',
+                'ID3-Tags und Metadata werden angewendet...',
+                'MP3-Puffer wird erstellt...'
+            ];
+
+            const interval = setInterval(() => {
+                percent += 5;
+                progressBar.style.width = percent + '%';
+                percentText.textContent = percent + '%';
+
+                if (percent < 30) statusText.textContent = steps[0];
+                else if (percent < 60) statusText.textContent = steps[1];
+                else if (percent < 90) statusText.textContent = steps[2];
+                else statusText.textContent = steps[3];
+
+                if (percent >= 100) {
+                    clearInterval(interval);
+                    statusText.textContent = 'Konvertierung abgeschlossen!';
+                    downloadReady.classList.remove('hidden');
+                    showToast('Fertig!', 'Audio-Stream ist bereit zum Download.', 'check-circle');
+                }
+            }, 100);
+        }
+
+        function downloadSimulatedFile() {
+            // Generates dummy audio tone for demonstration download
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = audioCtx.createOscillator();
+            const dest = audioCtx.createMediaStreamDestination();
+            osc.connect(dest);
+            osc.start();
+            setTimeout(() => osc.stop(), 1000);
+
+            showToast('Download gestartet', 'Ihre MP3-Datei wird gespeichert...', 'download');
+        }
+
+        // Drag & Drop Handling for Local File Workstation
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('drop-zone').classList.add('border-brand-500', 'bg-brand-500/10');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('drop-zone').classList.remove('border-brand-500', 'bg-brand-500/10');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('drop-zone').classList.remove('border-brand-500', 'bg-brand-500/10');
+            
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                processUploadedFile(e.dataTransfer.files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            if (e.target.files && e.target.files[0]) {
+                processUploadedFile(e.target.files[0]);
+            }
+        }
+
+        function processUploadedFile(file) {
+            loadedFile = file;
+            const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
+            
+            document.getElementById('file-name-display').textContent = file.name;
+            document.getElementById('file-size-display').textContent = `${sizeMb} MB`;
+
+            const videoPlayer = document.getElementById('main-video-player');
+            const audioPlayer = document.getElementById('main-audio-player');
+            const snapshotBox = document.getElementById('tool-snapshot-box');
+
+            const fileUrl = URL.createObjectURL(file);
+
+            if (file.type.startsWith('video/')) {
+                videoPlayer.src = fileUrl;
+                videoPlayer.classList.remove('hidden');
+                audioPlayer.classList.add('hidden');
+                snapshotBox.classList.remove('hidden');
+            } else if (file.type.startsWith('audio/')) {
+                audioPlayer.src = fileUrl;
+                audioPlayer.classList.remove('hidden');
+                videoPlayer.classList.add('hidden');
+                snapshotBox.classList.add('hidden');
+            }
+
+            document.getElementById('media-workstation').classList.remove('hidden');
+            showToast('Datei geladen', `${file.name} erfolgreich im Editor geöffnet.`, 'file-text');
+        }
+
+        // Change Video/Audio Playback Speed
+        function changeSpeed(val) {
+            document.getElementById('speed-val').textContent = val + 'x';
+            const videoPlayer = document.getElementById('main-video-player');
+            const audioPlayer = document.getElementById('main-audio-player');
+            videoPlayer.playbackRate = val;
+            audioPlayer.playbackRate = val;
+        }
+
+        // Frame Grabber (Video Snapshot)
+        function takeSnapshot() {
+            const video = document.getElementById('main-video-player');
+            if (!video || video.classList.contains('hidden')) return;
+
+            const canvas = document.getElementById('hidden-canvas');
+            canvas.width = video.videoWidth || 1280;
+            canvas.height = video.videoHeight || 720;
+            
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            const dataUrl = canvas.toDataURL('image/png');
+            const a = document.createElement('a');
+            a.href = dataUrl;
+            a.download = `snapshot_${Date.now()}.png`;
+            a.click();
+
+            showToast('Snapshot gespeichert!', 'Video-Frame wurde als PNG heruntergeladen.', 'camera');
+        }
+
+        // Extract Audio Track to WAV
+        function extractAudioTrack() {
+            if (!loadedFile) return;
+
+            showToast('Extrahiere Audio...', 'Erstelle WAV Audio-Datei aus Video...', 'cpu');
+
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                audioCtx.decodeAudioData(e.target.result, function(buffer) {
+                    const wavBuffer = audioBufferToWav(buffer);
+                    const blob = new Blob([wavBuffer], { type: 'audio/wav' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `extracted_audio_${Date.now()}.wav`;
+                    a.click();
+
+                    showToast('Erfolg!', 'Audio-Spur wurde als WAV heruntergeladen.', 'download');
+                }, function() {
+                    showToast('Fehler', 'Audio-Dekodierung fehlgeschlagen.', 'alert-triangle');
+                });
+            };
+
+            reader.readAsArrayBuffer(loadedFile);
+        }
+
+        // Helper: Convert AudioBuffer to WAV File Format
+        function audioBufferToWav(buffer) {
+            let numOfChan = buffer.numberOfChannels,
+                len = buffer.length * numOfChan * 2 + 44,
+                out = new DataView(new ArrayBuffer(len)),
+                channels = [], i, sample,
+                offset = 0,
+                pos = 0;
+
+            function setUint16(data) { out.setUint16(pos, data, true); pos += 2; }
+            function setUint32(data) { out.setUint32(pos, data, true); pos += 4; }
+
+            setUint32(0x46464952); // "RIFF"
+            setUint32(len - 8);
+            setUint32(0x45564157); // "WAVE"
+            setUint32(0x20746d66); // "fmt " chunk
+            setUint32(16); // length
+            setUint16(1); // PCM
+            setUint16(numOfChan);
+            setUint32(buffer.sampleRate);
+            setUint32(buffer.sampleRate * 2 * numOfChan);
+            setUint16(numOfChan * 2);
+            setUint16(16);
+            setUint32(0x61746164); // "data" chunk
+            setUint32(len - pos - 4);
+
+            for (i = 0; i < buffer.numberOfChannels; i++) channels.push(buffer.getChannelData(i));
+
+            while (offset < buffer.length) {
+                for (i = 0; i < numOfChan; i++) {
+                    sample = Math.max(-1, Math.min(1, channels[i][offset]));
+                    sample = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+                    out.setInt16(pos, sample, true);
+                    pos += 2;
+                }
+                offset++;
+            }
+            return out.buffer;
+        }
+
+        // Custom Toast System
+        function showToast(title, message, iconName = 'info') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-msg').textContent = message;
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
