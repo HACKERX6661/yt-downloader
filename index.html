@@ -2,47 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My YT Downloader</title>
+    <title>Clean Downloader</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-black text-white flex items-center justify-center h-screen">
-    <div class="p-8 bg-neutral-900 rounded-2xl shadow-2xl w-96 border border-neutral-800">
-        <h1 class="text-2xl font-bold mb-6">Downloader</h1>
-        <input id="url" type="text" placeholder="Paste YouTube link here" class="w-full p-3 rounded-lg bg-neutral-800 mb-4 border border-neutral-700 focus:outline-none focus:border-blue-500">
-        <button id="dlBtn" onclick="downloadVideo()" class="w-full bg-blue-600 hover:bg-blue-500 py-3 rounded-lg font-bold transition">Download</button>
-        <p id="status" class="mt-4 text-xs text-neutral-400 text-center"></p>
+    <div class="bg-gray-900 p-8 rounded-xl w-96 text-center border border-gray-700">
+        <h1 class="text-xl font-bold mb-4">Downloader</h1>
+        <input id="url" type="text" placeholder="Paste YouTube Link" class="w-full p-2 rounded bg-gray-800 mb-4 border border-gray-700">
+        <button onclick="go()" class="w-full bg-blue-600 py-2 rounded font-bold hover:bg-blue-500">Get Download</button>
+        <div id="result" class="mt-4"></div>
     </div>
 
     <script>
-        async function downloadVideo() {
+        function go() {
             const url = document.getElementById('url').value;
-            const status = document.getElementById('status');
-            const btn = document.getElementById('dlBtn');
-            
+            const res = document.getElementById('result');
             if(!url) return;
-            
-            btn.disabled = true;
-            status.innerText = "Downloading... please wait, this may take a moment.";
-            
-            const response = await fetch('/download', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: 'url=' + encodeURIComponent(url)
-            });
-
-            if (response.ok) {
-                const blob = await response.blob();
-                const urlObj = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = urlObj;
-                a.download = "video.mp4";
-                a.click();
-                status.innerText = "Finished!";
-            } else {
-                status.innerText = "Error: Could not download.";
-            }
-            btn.disabled = false;
+            // Using a direct, clean embed-based downloader
+            const videoId = url.split('v=')[1]?.split('&')[0] || url.split('/').pop();
+            res.innerHTML = `<iframe src="https://loader.to/api/button/?url=${encodeURIComponent(url)}&f=mp4" style="width:100%;height:60px;border:none;"></iframe>`;
         }
     </script>
 </body>
